@@ -1,31 +1,13 @@
-// SPDX-License-Identifier: Apache-2.0
-//! SigmaOS-llvm - System utility component
-//! Part of SigmaOS multi-repository architecture
+//! SigmaOS-llvm — compiler infrastructure library.
+//!
+//! Models the LLVM core: IR (modules, functions, basic blocks,
+//! instructions), an analysis/transform pass manager, and target
+//! machine descriptions. Deterministic, std-only, no actual codegen.
 
-#![no_std]
+pub mod ir;
+pub mod pass;
+pub mod target;
 
-/// Component
-pub struct Component {
-    name: &'static str,
-}
-
-impl Component {
-    pub fn new() -> Self {
-        Self { name: "SigmaOS-llvm" }
-    }
-}
-
-impl Default for Component {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_creation() {
-        let c = super::Component::new();
-        assert_eq!(c.name, "SigmaOS-llvm");
-    }
-}
+pub use ir::{BasicBlock, Function, Instruction, Module, Operand, Type, Value};
+pub use pass::{Analysis, Pass, PassManager, PassResult};
+pub use target::{TargetMachine, Triple};
